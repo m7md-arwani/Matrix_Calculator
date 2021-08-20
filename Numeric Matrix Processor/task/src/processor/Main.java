@@ -15,9 +15,12 @@ public class Main {
 
 }
 
+// This class will contain all the main calculation processes.
 class calculator {
+    // A scanner object will be utilized throughout the class.
     static final Scanner sc = new Scanner(System.in).useLocale(Locale.US);
 
+    // The function reads a matrix from the user, given the size.
     static double[][] readInputMatrix(int rows, int columns) {
 
         double[][] matrix = new double[rows][columns];
@@ -49,6 +52,7 @@ class calculator {
 
         double con = sc.nextDouble();
         System.out.println("The result is:");
+        // Iterating over each element of the matrix and multiplies it with a constant.
         for (int i = 0; i < arr.length; i++) {
             for (int j = 0; j < arr[0].length; j++) {
                 arr[i][j] = arr[i][j] * con;
@@ -58,6 +62,7 @@ class calculator {
 
     }
 
+    // This is an overloaded function that is not interactive with the user. Meant to backend use.
     public static double[][] multiplyConstant(double[][] arr, double con) {
         for (int i = 0; i < arr.length; i++) {
             for (int j = 0; j < arr[0].length; j++) {
@@ -67,26 +72,28 @@ class calculator {
         return arr.clone();
 
     }
-
+    // The function adds two matrices, and check whether it of the same size or not.
     static void matracesAddition() {
         System.out.println("Enter the size of first matrix:");
         int n1 = sc.nextInt();
         int m1 = sc.nextInt();
         System.out.println("Enter first matrix:");
         sc.nextLine();
-        double[][] arr1 = readInputMatrix(n1, m1);
+        double[][] arr1 = readInputMatrix(n1, m1); // First Matrix
         System.out.println("Enter the size of second matrix:");
         int n2 = sc.nextInt();
         int m2 = sc.nextInt();
         sc.nextLine();
         System.out.println("Enter second matrix:");
-        double[][] arr2 = readInputMatrix(n2, m2);
+        double[][] arr2 = readInputMatrix(n2, m2); // Second Matrix
+        // Checking that both have the same size.
         if (arr1.length != arr2.length && arr1[0].length != arr2[0].length) {
             System.out.println("Operation cannot be performed.");
         } else {
-            double[][] result = new double[n1][m1];
+            double[][] result = new double[n1][m1]; // Storing the result
             System.out.println("The result is:");
-            for (int i = 0; i < n1; i++) {
+            // Iterating over each element of both matrices and summing them up to the new matrix
+            for (int i = 0; i < n1; i++) { 
                 for (int j = 0; j < m1; j++) {
                     result[i][j] = arr1[i][j] + arr2[i][j];
                 }
@@ -98,7 +105,7 @@ class calculator {
 
 
     }
-
+    // This function is meant to print any given matrix to the user to see it.
     public static void print(double[][] arr) {
         for (double[] doubles : arr) {
             System.out.println();
