@@ -114,7 +114,7 @@ class calculator {
             }
         }
     }
-
+    // Performs multiplication between two matrices.
     public static void multiplication() {
         System.out.println("Enter the size of first matrix:");
         int n1 = sc.nextInt();
@@ -128,6 +128,8 @@ class calculator {
         System.out.println("Enter second matrix:");
         sc.nextLine();
         double[][] arr2 = readInputMatrix(n2, m2);
+        // Linear Algebra states that the number columns of the first matrix 
+        // should equal to the number of rows in the second one.
         if (m1 != n2) {
             System.out.println("The operation cannot be performed.");
         } else {
@@ -147,10 +149,10 @@ class calculator {
 
 
     }
-
+    // Performs a Transpose about the main diagonal.
     public static void transMain() {
-        double[][] arr = inputForTranspose();
-        double[][] arr2 = new double[arr.length][arr[0].length];
+        double[][] arr = inputForTranspose(); // The matrix which the user wants to transpose.
+        double[][] arr2 = new double[arr.length][arr[0].length]; // Here the result will be stored.
         for (int i = 0; i < arr.length; i++) {
             for (int j = 0; j < arr[0].length; j++) {
                 arr2[j][i] = arr[i][j];
@@ -173,7 +175,7 @@ class calculator {
 
 
     }
-
+    // Transpose about the side diagonal.
     public static void transSide() {
         double[][] arr = inputForTranspose();
         double[][] arr2 = new double[arr.length][arr[0].length];
@@ -213,7 +215,7 @@ class calculator {
         print(arr2);
 
     }
-
+    // A shortcut to get A matrix from the user.
     public static double[][] inputForTranspose() {
         System.out.println("Enter matrix size");
         int n1 = sc.nextInt();
@@ -269,7 +271,8 @@ class calculator {
         }
         return R;
     }
-
+    // The process of finding a determinant was complex,
+    // so this function is built to make use of "findDeterminant()" which uses "findCofactor()"
     public static void DeterminantManager() {
         // the function can be used to take a matrix from the user.
         double[][] matrix = inputForTranspose();
@@ -279,11 +282,15 @@ class calculator {
         System.out.println(result);
 
     }
-
+    // Finding the inverse of a matrix depended on a lot of premade functions.
     public static void findTheInverse() {
         double[][] mat = inputForTranspose();
         int n = mat.length;
-        double[][] temp = new double[n - 1][n - 1];
+        // will hold temp values of cofactors.
+        // Using the fact that the size of any minor in a matrix of size n * n is n-1 * n-1.
+        // The size is "n-1 * n-1" is a necessity,
+        // because extra zeros could lead to a row or column of zeros which gives a determiant of zero.
+        double[][] temp = new double[n - 1][n - 1]; 
         double determinant = findDeterminant(mat, n);
         double[][] cofactorsMatrix = new double[n][n];
         if (determinant == 0) {
@@ -295,9 +302,10 @@ class calculator {
                     cofactorsMatrix[i][j] = Math.pow(-1, (i + j)) * findDeterminant(temp, n - 1);
                 }
             }
-
+          // In Linear Algebra, an Adjoint is the cofactor matrix transpoed about its main diagonal.
             double[][] adjoint = transMain(cofactorsMatrix, n);
-            double constant = 1 / determinant;
+            double constant = 1 / determinant; // Part of the formula, 1 / determinant of the given matrix.
+            // The inverse = (1/ det(given matrix)) * adjoint 
             double[][] result = multiplyConstant(adjoint, constant);
             print(result);
 
@@ -305,22 +313,23 @@ class calculator {
     }
 
 }
-
+// State of Machine, a desing pattern.
 class state {
     public static Scanner g = new Scanner(System.in);
-    public static boolean isRunning = true;
+    public static boolean isRunning = true; // An indicator of machine state.
     public static State currentState = State.CHOOSING_AN_ACTION;
-
+    // The enum encompasses all the different states.
     enum State {
         ADDITION, MULTBYCONST, MULTIPLICATION, EXIT, CHOOSING_AN_ACTION, TRANSPOSE, DETERMINANT, INVERSE
     }
-
+    // The power button of the machine.
     public static void start() {
         while (isRunning) {
             state.operationManager(state.currentState);
         }
     }
-
+    // The function has two nested switches,
+    // both handle different scenarios according to the state.
     public static void operationManager(State state) {
         switch (state) {
             case CHOOSING_AN_ACTION:
@@ -328,6 +337,9 @@ class state {
                         "\n4. Transpose matrix" +
                         "\n5. Calculate a determinant\n6. Inverse matrix\n0. Exit");
                 int num = g.nextInt();
+                // in this switch, user choice will change the default state,
+                // in the switch after, the operation will be chosen according to the state,
+                // and will return the state to its default value
                 switch (num) {
                     case 1:
                         currentState = State.ADDITION;
@@ -357,7 +369,9 @@ class state {
                 }
                 break;
             case ADDITION:
-                currentState = State.CHOOSING_AN_ACTION;
+            // Meaning, ok I have received your signal no need to shout for me any longer.
+            // That is why we return the state to its default value.
+                currentState = State.CHOOSING_AN_ACTION; 
                 calculator.matracesAddition();
                 break;
             case MULTBYCONST:
@@ -383,7 +397,7 @@ class state {
 
         }
     }
-
+    // Different kind of transpose needed a manager function.
     public static void TransManager() {
         System.out.println("1. Main diagonal\n2. Side diagonal\n3. Vertical line" +
                 "\n4. Horizontal line");
