@@ -1,4 +1,6 @@
 package processor;
+import org.junit.jupiter.api.Test;
+
 import java.util.Locale;
 import java.util.Scanner;
 
