@@ -1,9 +1,7 @@
 package processor;
-
-import java.util.Locale;
 import java.util.Scanner;
 
-// State of Machine, a desing pattern.
+// State of Machine, a design pattern.
 class state {
     public static Scanner g = new Scanner(System.in);
     public static boolean isRunning = true; // An indicator of machine state.
