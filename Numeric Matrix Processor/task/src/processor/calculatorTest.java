@@ -2,8 +2,7 @@ package processor;
 
 import org.junit.jupiter.api.Test;
 
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
+import java.io.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -11,7 +10,7 @@ class calculatorTest {
 
     //Square Matrix Case
     @Test
-    void TestReadInputMatrix(){
+    void TestReadInputMatrix() {
         // Given
         int row = 4;
         int column = 4;
@@ -20,20 +19,20 @@ class calculatorTest {
         System.setIn(in);
 
         // When
-        double[][] matrix = calculator.readInputMatrix(row,column);
+        double[][] matrix = calculator.readInputMatrix(row, column);
         // Then
         double[][] expectedMatrix = {
-                {1,1,1,1},
-                {2,2,2,2},
-                {1,1,1,1},
-                {1,1,1,1}
+                {1, 1, 1, 1},
+                {2, 2, 2, 2},
+                {1, 1, 1, 1},
+                {1, 1, 1, 1}
         };
-        assertArrayEquals(expectedMatrix,matrix);
+        assertArrayEquals(expectedMatrix, matrix);
     }
 
     //non-Square Matrix Case
     @Test
-    void TestReadInputMatrixNonSquare(){
+    void TestReadInputMatrixNonSquare() {
         // Given
         int row = 4;
         int column = 2;
@@ -42,14 +41,38 @@ class calculatorTest {
         System.setIn(in);
 
         // When
-        double[][] matrix = calculator.readInputMatrix(row,column);
+        double[][] matrix = calculator.readInputMatrix(row, column);
         // Then
         double[][] expectedMatrix = {
-                {1,1},
-                {2,2},
-                {1,1},
-                {1,1}
+                {1, 1},
+                {2, 2},
+                {1, 1},
+                {1, 1}
         };
-        assertArrayEquals(expectedMatrix,matrix);
+        assertArrayEquals(expectedMatrix, matrix);
+    }
+
+    @Test
+    void TestMultiplyByConstant() {
+        // Given
+        String input = "3\n3\n3 3 3\n3 3 3\n3 3 3\n4";
+        InputStream in = new ByteArrayInputStream(input.getBytes());
+        System.setIn(in);
+        ByteArrayOutputStream outputCaptor = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outputCaptor));
+
+        // When
+        calculator.multiplyConstant();
+        // Filter the captured lines
+        String[] result = outputCaptor.toString().split(System.lineSeparator());
+        StringBuilder actual = new StringBuilder();
+        for (String line : result) {
+            if (!line.contains("Enter")) {
+                actual.append(line + "\n");
+            }
+        }
+        // Then
+        String expectedOutput = "The result is:\n12.0 12.0 12.0 \n12.0 12.0 12.0 \n12.0 12.0 12.0 \n";
+        assertEquals(expectedOutput, actual.toString());
     }
 }

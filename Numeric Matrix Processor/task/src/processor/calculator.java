@@ -26,7 +26,6 @@ class calculator {
 
     // multiplies any matrix with a constant.
     static void multiplyConstant() {
-        // assuming the matrix is a square one.
         System.out.println("Enter size of matrix:");
         int n1 = sc.nextInt();
         int m1 = sc.nextInt();
@@ -40,7 +39,7 @@ class calculator {
         System.out.println("Enter constant:");
 
         double con = sc.nextDouble();
-        System.out.println("The result is:");
+        System.out.print("The result is:");
         // Iterating over each element of the matrix and multiplies it with a constant.
         for (int i = 0; i < arr.length; i++) {
             for (int j = 0; j < arr[0].length; j++) {
