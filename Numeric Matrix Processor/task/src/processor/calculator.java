@@ -135,19 +135,14 @@ class calculator {
     public static void transMain() {
         double[][] arr = inputForTranspose(); // The matrix which the user wants to transpose.
         double[][] arr2 = new double[arr.length][arr[0].length]; // Here the result will be stored.
-        for (int i = 0; i < arr.length; i++) {
-            for (int j = 0; j < arr[0].length; j++) {
-                arr2[j][i] = arr[i][j];
-            }
-        }
         System.out.println("The result is:");
-        print(arr2);
+        print(transMain(arr,arr.length,arr[0].length));
 
     }
 
     // overloaded version to be used with inverse operation
-    public static double[][] transMain(double[][] arr, int n) {
-        double[][] arr2 = new double[n][n];
+    public static double[][] transMain(double[][] arr, int n, int m) {
+        double[][] arr2 = new double[n][m];
         for (int i = 0; i < arr.length; i++) {
             for (int j = 0; j < arr[0].length; j++) {
                 arr2[j][i] = arr[i][j];
@@ -285,7 +280,7 @@ class calculator {
                 }
             }
           // In Linear Algebra, an Adjoint is the cofactor matrix transpoed about its main diagonal.
-            double[][] adjoint = transMain(cofactorsMatrix, n);
+            double[][] adjoint = transMain(cofactorsMatrix, n,n);
             double constant = 1 / determinant; // Part of the formula, 1 / determinant of the given matrix.
             // The inverse = (1/ det(given matrix)) * adjoint 
             double[][] result = multiplyConstant(adjoint, constant);
