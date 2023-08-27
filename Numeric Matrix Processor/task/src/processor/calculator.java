@@ -41,12 +41,7 @@ class calculator {
         double con = sc.nextDouble();
         System.out.print("The result is:");
         // Iterating over each element of the matrix and multiplies it with a constant.
-        for (int i = 0; i < arr.length; i++) {
-            for (int j = 0; j < arr[0].length; j++) {
-                arr[i][j] = arr[i][j] * con;
-            }
-        }
-        print(arr);
+       print(multiplyConstant(arr,con));
 
     }
 
