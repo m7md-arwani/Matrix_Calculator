@@ -7,6 +7,7 @@ import java.io.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 class calculatorTest {
+    //TODO Restore the signal of System before and after each test
 
     //Square Matrix Case
     @Test
@@ -122,5 +123,56 @@ class calculatorTest {
         // Then
         String expectedOutput = "Operation cannot be performed.\n";
         assertEquals(expectedOutput, actual.toString());
+    }
+
+
+    @Test
+    void TestMultiplication() {
+        // Given
+        String input = "2 2\n2 3\n4 1\n2 2\n5 6\n7 8";
+        InputStream in = new ByteArrayInputStream(input.getBytes());
+        System.setIn(in);
+        ByteArrayOutputStream outputCaptor = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outputCaptor));
+
+        // When
+        calculator.multiplication();
+        // Filter the captured lines
+        String[] result = outputCaptor.toString().split(System.lineSeparator());
+        StringBuilder actual = new StringBuilder();
+        for (String line : result) {
+            if (!line.contains("Enter")) {
+                actual.append(line + "\n");
+            }
+        }
+        // Then
+        String expectedOutput = "\n31.0 36.0 \n27.0 32.0 \n";
+        assertEquals(expectedOutput,actual.toString());
+
+    }
+
+    @Test
+    void TestMultiplicationOperationCannotBePerformed() {
+        // Given
+        String input = "2 2\n2 3\n4 1\n3 2\n5 6\n7 8\n7 7";
+        InputStream in = new ByteArrayInputStream(input.getBytes());
+        System.setIn(in);
+        ByteArrayOutputStream outputCaptor = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outputCaptor));
+
+        // When
+        calculator.multiplication();
+        // Filter the captured lines
+        String[] result = outputCaptor.toString().split(System.lineSeparator());
+        StringBuilder actual = new StringBuilder();
+        for (String line : result) {
+            if (!line.contains("Enter")) {
+                actual.append(line + "\n");
+            }
+        }
+        // Then
+        String expectedOutput = "The operation cannot be performed.\n";
+        assertEquals(expectedOutput,actual.toString());
+
     }
 }
