@@ -134,7 +134,6 @@ class calculator {
     // Performs a Transpose about the main diagonal.
     public static void transMain() {
         double[][] arr = inputForTranspose(); // The matrix which the user wants to transpose.
-        double[][] arr2 = new double[arr.length][arr[0].length]; // Here the result will be stored.
         System.out.println("The result is:");
         print(transMain(arr,arr.length,arr[0].length));
 

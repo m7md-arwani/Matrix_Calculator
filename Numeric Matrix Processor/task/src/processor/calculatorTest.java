@@ -3,17 +3,21 @@ package processor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 import java.io.*;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 
 class TestCalculator {
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
     private final PrintStream originalOut = System.out;
+
     @BeforeEach
     public void setUpStreams() {
         System.setOut(new PrintStream(outContent));
     }
+
     @AfterEach
     public void restoreStreams() {
         System.setOut(originalOut);
@@ -153,7 +157,7 @@ class TestCalculator {
         }
         // Then
         String expectedOutput = "\n31.0 36.0 \n27.0 32.0 \n";
-        assertEquals(expectedOutput,actual.toString());
+        assertEquals(expectedOutput, actual.toString());
 
     }
 
@@ -177,7 +181,7 @@ class TestCalculator {
         }
         // Then
         String expectedOutput = "The operation cannot be performed.\n";
-        assertEquals(expectedOutput,actual.toString());
+        assertEquals(expectedOutput, actual.toString());
 
     }
 
@@ -185,21 +189,21 @@ class TestCalculator {
     void TestPrint() {
         // Given
         double[][] matrix = {
-                {1,2,3,4},
-                {1,2,3,4},
-                {1,2,3,4}
+                {1, 2, 3, 4},
+                {1, 2, 3, 4},
+                {1, 2, 3, 4}
         };
         System.setOut(new PrintStream(outContent));
         // When
         calculator.print(matrix);
         //Process Output
         StringBuilder actual = new StringBuilder();
-        for (String line:outContent.toString().split(System.lineSeparator())) {
+        for (String line : outContent.toString().split(System.lineSeparator())) {
             actual.append(line).append("\n");
         }
         // Then
         String expectedOutPut = "1.0 2.0 3.0 4.0 \n1.0 2.0 3.0 4.0 \n1.0 2.0 3.0 4.0";
-        assertEquals(expectedOutPut,actual.toString().trim());
+        assertEquals(expectedOutPut, actual.toString().trim());
 
     }
 
@@ -222,7 +226,7 @@ class TestCalculator {
         }
         // Then
         String expected = "The result is:\n\n1.0 4.0 7.0 \n2.0 5.0 8.0 \n3.0 6.0 9.0";
-        assertEquals(expected,actual.toString().trim());
+        assertEquals(expected, actual.toString().trim());
 
     }
     //TODO Make the function able to calculate the transpose of a non-square matrix
