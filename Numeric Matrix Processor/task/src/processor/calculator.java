@@ -70,7 +70,7 @@ class calculator {
         System.out.println("Enter second matrix:");
         double[][] arr2 = readInputMatrix(n2, m2); // Second Matrix
         // Checking that both have the same size.
-        if (arr1.length != arr2.length && arr1[0].length != arr2[0].length) {
+        if (n1 != n2 || m1 != m2) {
             System.out.println("Operation cannot be performed.");
         } else {
             double[][] result = new double[n1][m1]; // Storing the result

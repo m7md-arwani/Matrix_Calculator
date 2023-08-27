@@ -99,4 +99,28 @@ class calculatorTest {
         String expectedOutput = "The result is:\n\n6.0 6.0 6.0 \n6.0 6.0 6.0 \n6.0 6.0 6.0 \n";
         assertEquals(expectedOutput, actual.toString());
     }
+
+    @Test
+    void TestMatricesAdditionOperationCannotBePerformed() {
+        // Given
+        String input = "3 4\n3 3 3 3\n3 3 3 3\n3 3 3 3\n3 3\n3 3 3\n3 3 3\n3 3 3";
+        InputStream in = new ByteArrayInputStream(input.getBytes());
+        System.setIn(in);
+        ByteArrayOutputStream outputCaptor = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outputCaptor));
+
+        // When
+        calculator.matracesAddition();
+        // Filter the captured lines
+        String[] result = outputCaptor.toString().split(System.lineSeparator());
+        StringBuilder actual = new StringBuilder();
+        for (String line : result) {
+            if (!line.contains("Enter")) {
+                actual.append(line + "\n");
+            }
+        }
+        // Then
+        String expectedOutput = "Operation cannot be performed.\n";
+        assertEquals(expectedOutput, actual.toString());
+    }
 }
