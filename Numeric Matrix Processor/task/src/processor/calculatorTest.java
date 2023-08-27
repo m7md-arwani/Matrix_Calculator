@@ -1,13 +1,23 @@
 package processor;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.jupiter.api.Test;
-
 import java.io.*;
-
 import static org.junit.jupiter.api.Assertions.*;
 
+
 class calculatorTest {
-    //TODO Restore the signal of System before and after each test
+    private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+    private final PrintStream originalOut = System.out;
+    @Before
+    public void setUpStreams() {
+        System.setOut(new PrintStream(outContent));
+    }
+    @After
+    public void restoreStreams() {
+        System.setOut(originalOut);
+    }
 
     //Square Matrix Case
     @Test
@@ -56,16 +66,15 @@ class calculatorTest {
     @Test
     void TestMultiplyByConstant() {
         // Given
-        String input = "3\n3\n3 3 3\n3 3 3\n3 3 3\n4";
+        String input = "3 3\n3 3 3\n3 3 3\n3 3 3\n4";
         InputStream in = new ByteArrayInputStream(input.getBytes());
         System.setIn(in);
-        ByteArrayOutputStream outputCaptor = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(outputCaptor));
+        System.setOut(new PrintStream(outContent));
 
         // When
         calculator.multiplyConstant();
         // Filter the captured lines
-        String[] result = outputCaptor.toString().split(System.lineSeparator());
+        String[] result = outContent.toString().split(System.lineSeparator());
         StringBuilder actual = new StringBuilder();
         for (String line : result) {
             if (!line.contains("Enter")) {
@@ -83,13 +92,12 @@ class calculatorTest {
         String input = "3 3\n3 3 3\n3 3 3\n3 3 3\n3 3\n3 3 3\n3 3 3\n3 3 3";
         InputStream in = new ByteArrayInputStream(input.getBytes());
         System.setIn(in);
-        ByteArrayOutputStream outputCaptor = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(outputCaptor));
+        System.setOut(new PrintStream(outContent));
 
         // When
         calculator.matracesAddition();
         // Filter the captured lines
-        String[] result = outputCaptor.toString().split(System.lineSeparator());
+        String[] result = outContent.toString().split(System.lineSeparator());
         StringBuilder actual = new StringBuilder();
         for (String line : result) {
             if (!line.contains("Enter")) {
@@ -107,13 +115,12 @@ class calculatorTest {
         String input = "3 4\n3 3 3 3\n3 3 3 3\n3 3 3 3\n3 3\n3 3 3\n3 3 3\n3 3 3";
         InputStream in = new ByteArrayInputStream(input.getBytes());
         System.setIn(in);
-        ByteArrayOutputStream outputCaptor = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(outputCaptor));
+        System.setOut(new PrintStream(outContent));
 
         // When
         calculator.matracesAddition();
         // Filter the captured lines
-        String[] result = outputCaptor.toString().split(System.lineSeparator());
+        String[] result = outContent.toString().split(System.lineSeparator());
         StringBuilder actual = new StringBuilder();
         for (String line : result) {
             if (!line.contains("Enter")) {
@@ -132,13 +139,12 @@ class calculatorTest {
         String input = "2 2\n2 3\n4 1\n2 2\n5 6\n7 8";
         InputStream in = new ByteArrayInputStream(input.getBytes());
         System.setIn(in);
-        ByteArrayOutputStream outputCaptor = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(outputCaptor));
+        System.setOut(new PrintStream(outContent));
 
         // When
         calculator.multiplication();
         // Filter the captured lines
-        String[] result = outputCaptor.toString().split(System.lineSeparator());
+        String[] result = outContent.toString().split(System.lineSeparator());
         StringBuilder actual = new StringBuilder();
         for (String line : result) {
             if (!line.contains("Enter")) {
@@ -157,13 +163,12 @@ class calculatorTest {
         String input = "2 2\n2 3\n4 1\n3 2\n5 6\n7 8\n7 7";
         InputStream in = new ByteArrayInputStream(input.getBytes());
         System.setIn(in);
-        ByteArrayOutputStream outputCaptor = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(outputCaptor));
+        System.setOut(new PrintStream(outContent));
 
         // When
         calculator.multiplication();
         // Filter the captured lines
-        String[] result = outputCaptor.toString().split(System.lineSeparator());
+        String[] result = outContent.toString().split(System.lineSeparator());
         StringBuilder actual = new StringBuilder();
         for (String line : result) {
             if (!line.contains("Enter")) {
@@ -173,6 +178,51 @@ class calculatorTest {
         // Then
         String expectedOutput = "The operation cannot be performed.\n";
         assertEquals(expectedOutput,actual.toString());
+
+    }
+
+    @Test
+    void TestPrint() {
+        // Given
+        double[][] matrix = {
+                {1,2,3,4},
+                {1,2,3,4},
+                {1,2,3,4}
+        };
+        System.setOut(new PrintStream(outContent));
+        // When
+        calculator.print(matrix);
+        //Process Output
+        StringBuilder actual = new StringBuilder();
+        for (String line:outContent.toString().split(System.lineSeparator())) {
+            actual.append(line+"\n");
+        }
+        // Then
+        String expectedOutPut = "1.0 2.0 3.0 4.0 \n1.0 2.0 3.0 4.0 \n1.0 2.0 3.0 4.0";
+        assertEquals(expectedOutPut,actual.toString().trim());
+
+    }
+
+    @Test
+    void TestTransMain() {
+        // Given
+        String input = "3 3\n1 2 3\n4 5 6\n7 8 9";
+        InputStream in = new ByteArrayInputStream(input.getBytes());
+        System.setIn(in);
+        System.setOut(new PrintStream(outContent));
+        // When
+        calculator.transMain();
+        // Filter Captured lines
+        String[] result = outContent.toString().split(System.lineSeparator());
+        StringBuilder actual = new StringBuilder();
+        for (String line : result) {
+            if (!line.contains("Enter")) {
+                actual.append(line + "\n");
+            }
+        }
+        // Then
+        String expected = "The result is:\n\n1.0 4.0 7.0 \n2.0 5.0 8.0 \n3.0 6.0 9.0";
+        assertEquals(expected,actual.toString().trim());
 
     }
 }
