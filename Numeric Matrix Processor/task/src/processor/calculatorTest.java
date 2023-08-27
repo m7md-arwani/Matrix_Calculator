@@ -1,20 +1,20 @@
 package processor;
 
-import org.junit.After;
-import org.junit.Before;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import java.io.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 
-class calculatorTest {
+class TestCalculator {
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
     private final PrintStream originalOut = System.out;
-    @Before
+    @BeforeEach
     public void setUpStreams() {
         System.setOut(new PrintStream(outContent));
     }
-    @After
+    @AfterEach
     public void restoreStreams() {
         System.setOut(originalOut);
     }
@@ -78,7 +78,7 @@ class calculatorTest {
         StringBuilder actual = new StringBuilder();
         for (String line : result) {
             if (!line.contains("Enter")) {
-                actual.append(line + "\n");
+                actual.append(line).append("\n");
             }
         }
         // Then
@@ -101,7 +101,7 @@ class calculatorTest {
         StringBuilder actual = new StringBuilder();
         for (String line : result) {
             if (!line.contains("Enter")) {
-                actual.append(line + "\n");
+                actual.append(line).append("\n");
             }
         }
         // Then
@@ -124,7 +124,7 @@ class calculatorTest {
         StringBuilder actual = new StringBuilder();
         for (String line : result) {
             if (!line.contains("Enter")) {
-                actual.append(line + "\n");
+                actual.append(line).append("\n");
             }
         }
         // Then
@@ -148,7 +148,7 @@ class calculatorTest {
         StringBuilder actual = new StringBuilder();
         for (String line : result) {
             if (!line.contains("Enter")) {
-                actual.append(line + "\n");
+                actual.append(line).append("\n");
             }
         }
         // Then
@@ -172,7 +172,7 @@ class calculatorTest {
         StringBuilder actual = new StringBuilder();
         for (String line : result) {
             if (!line.contains("Enter")) {
-                actual.append(line + "\n");
+                actual.append(line).append("\n");
             }
         }
         // Then
@@ -195,7 +195,7 @@ class calculatorTest {
         //Process Output
         StringBuilder actual = new StringBuilder();
         for (String line:outContent.toString().split(System.lineSeparator())) {
-            actual.append(line+"\n");
+            actual.append(line).append("\n");
         }
         // Then
         String expectedOutPut = "1.0 2.0 3.0 4.0 \n1.0 2.0 3.0 4.0 \n1.0 2.0 3.0 4.0";
@@ -217,7 +217,7 @@ class calculatorTest {
         StringBuilder actual = new StringBuilder();
         for (String line : result) {
             if (!line.contains("Enter")) {
-                actual.append(line + "\n");
+                actual.append(line).append("\n");
             }
         }
         // Then
@@ -225,4 +225,30 @@ class calculatorTest {
         assertEquals(expected,actual.toString().trim());
 
     }
+    //TODO Make the function able to calculate the transpose of a non-square matrix
+    // Transposing a non-square matrix
+//    @Test
+//    void TestTransMainNonSquare() {
+//        // Given
+//        String input = "2 3\n6 4 24\n1 -9 8";
+//        InputStream in = new ByteArrayInputStream(input.getBytes());
+//        System.setIn(in);
+//        System.setOut(new PrintStream(outContent));
+//        // When
+//        calculator.transMain();
+//        // Filter Captured lines
+//        String[] result = outContent.toString().split(System.lineSeparator());
+//        StringBuilder actual = new StringBuilder();
+//        for (String line : result) {
+//            if (!line.contains("Enter")) {
+//                actual.append(line + "\n");
+//            }
+//        }
+//        // Then
+//        String expected = "The result is:\n\n6.0 1.0 \n4.0 9.0- \n24.0 8.0";
+//        assertEquals(expected,actual.toString().trim());
+//
+//    }
+
+
 }
