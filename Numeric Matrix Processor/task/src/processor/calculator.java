@@ -1,5 +1,6 @@
 package processor;
 
+import java.text.DecimalFormat;
 import java.util.Locale;
 import java.util.Scanner;
 
@@ -40,7 +41,7 @@ class calculator {
         double con = sc.nextDouble();
         System.out.print("The result is:");
         // Iterating over each element of the matrix and multiplies it with a constant.
-       print(multiplyConstant(arr,con));
+        print(multiplyConstant(arr, con));
 
     }
 
@@ -54,6 +55,7 @@ class calculator {
         return arr.clone();
 
     }
+
     // The function adds two matrices, and check whether it of the same size or not.
     static void matracesAddition() {
         System.out.println("Enter the size of first matrix:");
@@ -75,7 +77,7 @@ class calculator {
             double[][] result = new double[n1][m1]; // Storing the result
             System.out.println("The result is:");
             // Iterating over each element of both matrices and summing them up to the new matrix
-            for (int i = 0; i < n1; i++) { 
+            for (int i = 0; i < n1; i++) {
                 for (int j = 0; j < m1; j++) {
                     result[i][j] = arr1[i][j] + arr2[i][j];
                 }
@@ -87,15 +89,18 @@ class calculator {
 
 
     }
+
     // This function is meant to print any given matrix to the user to see it.
     public static void print(double[][] arr) {
+        DecimalFormat decFor = new DecimalFormat("0.00");
         for (double[] doubles : arr) {
             System.out.println();
             for (int j = 0; j < arr[0].length; j++) {
-                System.out.print(doubles[j] + " ");
+                System.out.print(decFor.format(doubles[j]) + " ");
             }
         }
     }
+
     // Performs multiplication between two matrices.
     public static void multiplication() {
         System.out.println("Enter the size of first matrix:");
@@ -131,11 +136,12 @@ class calculator {
 
 
     }
+
     // Performs a Transpose about the main diagonal.
     public static void transMain() {
         double[][] arr = inputForTranspose(); // The matrix which the user wants to transpose.
         System.out.println("The result is:");
-        print(transMain(arr,arr.length,arr[0].length));
+        print(transMain(arr, arr.length, arr[0].length));
 
     }
 
@@ -151,6 +157,7 @@ class calculator {
 
 
     }
+
     // Transpose about the side diagonal.
     public static void transSide() {
         double[][] arr = inputForTranspose();
@@ -191,6 +198,7 @@ class calculator {
         print(arr2);
 
     }
+
     // A shortcut to get A matrix from the user.
     public static double[][] inputForTranspose() {
         System.out.println("Enter matrix size");
@@ -247,6 +255,7 @@ class calculator {
         }
         return R;
     }
+
     // The process of finding a determinant was complex,
     // so this function is built to make use of "findDeterminant()" which uses "findCofactor()"
     public static void DeterminantManager() {
@@ -258,7 +267,8 @@ class calculator {
         System.out.println(result);
 
     }
-    // Finding the inverse of a matrix depended on a lot of premade functions.
+
+    // Finding the inverse of a matrix depended on a lot of pre-made functions.
     public static void findTheInverse() {
         double[][] mat = inputForTranspose();
         int n = mat.length;
@@ -266,7 +276,7 @@ class calculator {
         // Using the fact that the size of any minor in a matrix of size n * n is n-1 * n-1.
         // The size is "n-1 * n-1" is a necessity,
         // because extra zeros could lead to a row or column of zeros which gives a determiant of zero.
-        double[][] temp = new double[n - 1][n - 1]; 
+        double[][] temp = new double[n - 1][n - 1];
         double determinant = findDeterminant(mat, n);
         double[][] cofactorsMatrix = new double[n][n];
         if (determinant == 0) {
@@ -278,8 +288,8 @@ class calculator {
                     cofactorsMatrix[i][j] = Math.pow(-1, (i + j)) * findDeterminant(temp, n - 1);
                 }
             }
-          // In Linear Algebra, an Adjoint is the cofactor matrix transpoed about its main diagonal.
-            double[][] adjoint = transMain(cofactorsMatrix, n,n);
+            // In Linear Algebra, an Adjoint is the cofactor matrix transpoed about its main diagonal.
+            double[][] adjoint = transMain(cofactorsMatrix, n, n);
             double constant = 1 / determinant; // Part of the formula, 1 / determinant of the given matrix.
             // The inverse = (1/ det(given matrix)) * adjoint 
             double[][] result = multiplyConstant(adjoint, constant);
